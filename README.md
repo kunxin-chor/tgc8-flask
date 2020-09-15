@@ -1,39 +1,63 @@
-<img src="https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png" style="margin: 0;">
 
-Welcome USER_NAME,
+# Setting up Flask
+In the termainl, we must type in and press ENTER:
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project.
+`pip3 install flask`
 
-## Gitpod Reminders
+# Running Flask
+In the terminal, make sure you are in the same directory as `main.py` file you 
+want to run, then type in
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+`python3 main.py 8080`
 
-`python3 -m http.server`
+And press enter.
 
-A blue button should appear to click: *Make Public*,
+If your terminal is *not* at the same directory as `main.py`, you can right click on
+the folder (under the explorer and select `Open terminal at`)
 
-Another blue button should appear to click: *Open Browser*.
+**Note:** You can only run one Flask server at a time. Be sure to press CTRL+C to quit
+the existing one when you are done.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+# How to a set up a route that uses a HTML template
 
-A blue button should appear to click: *Make Public*,
+1. Create a folder named `templates` that is in the same level as your `app.y`
 
-Another blue button should appear to click: *Open Browser*.
+2. In the `templates` folder create a new file named `about.template.html` (or whatever you want your 
+template file to be called)
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the backend lessons.
+3. Fill in the template as you deem fit.
 
-## Updates Since The Instructional Video
+4. Inside the view function, 
 
-We continually tweak and adjust this template to help give you the best experience. Here are the updates since the original video was made:
+```
+@app.route('/about')
+def about_us():
+    return render_template('about.template.html')
+```
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+# Routes with parameters
+Inside the url for `@app.route` we can specify parameters with `<parameter-name>`.
+Take a look at the example below:
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+```
+@app.route('/add/<n1>/<n2>')
+def add_two(n1, n2):
+    total = int(n1) + int(n2)
+    return render_template('math.template.html', num1=n1,
+                           num2=n2, result=total)
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+```
+In the case above, the url `/add/4/5` will map 4 to `n1` and 5 to `n2`.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
 
---------
+# Static files
+All asset files such as images, css, js etc. they will all go under
+a folder named `static`
 
-Happy coding!
+To access them, just use the following:
+
+```
+<div>
+    <img src="static/dog.gif"/>
+</div>
+```
