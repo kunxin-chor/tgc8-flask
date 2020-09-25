@@ -20,10 +20,26 @@ def process_bmi_calculator():
     weight = request.form.get('weight')
     height = request.form.get('height')
     # whatever we get back from the form is a STRING
-    bmi = float(weight) / float(height) * float(height)    
+    bmi = float(weight) / float(height) * float(height)
 
-    return render_template('bmi_results.template.html', bmi=bmi )
+    return render_template('bmi_results.template.html', bmi_result=bmi)
 
+
+@app.route('/survey')
+def show_health_survey():
+    return render_template('survey.template.html')
+
+
+@app.route('/survey', methods=["POST"])
+def process_health_survey():
+    full_name = request.form.get('full-name')
+    gender = request.form.get('gender')
+    symptoms = request.form.getlist('symptoms')
+
+    return render_template('survey_results.template.html',
+                           full_name=full_name,
+                           gender=gender,
+                           symptoms=symptoms)
 
 
 # "magic code" -- boilerplate
